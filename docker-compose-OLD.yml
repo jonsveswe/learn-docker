@@ -7,5 +7,10 @@ services:
     # All the configurations from the docker run command. Port to open, bind mount volume, anonymous volume, env file,  
     ports:
       - "3000:3000"
+    volumes:
+      - ./:/app:ro # Bind mount. Here we can use the dot "." for current directory, no need for ${pwd}.
+      - /app/node_modules # anonymous volume to not overwrite the node_modules folder.
     environment:
       - Port=3000
+    # env_file:
+    #   - ./.env

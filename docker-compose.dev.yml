@@ -1,0 +1,17 @@
+version: '3'
+services:
+  node-app:
+    build:
+      # location of the Dockerfile
+      context: . 
+      # args will be used in the Dockerfile when building the image. 
+      args:
+        - NODE_ENV=development
+    volumes:
+      # Bind mount. Here we can use the dot "." for current directory, no need for ${pwd}.
+      - ./:/app:ro 
+      # anonymous volume to not overwrite the node_modules folder.
+      - /app/node_modules 
+    environment:
+      - NODE_ENV=development
+    command: npm run dev

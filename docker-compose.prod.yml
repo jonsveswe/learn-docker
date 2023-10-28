@@ -1,0 +1,13 @@
+version: '3'
+services:
+  node-app:
+    build:
+      # location of the Dockerfile
+      context: . 
+      # args will be used in the Dockerfile when building the image. 
+      args:
+        - NODE_ENV=production
+    environment:
+      - NODE_ENV=production
+    # This is more optimised than "npm run start".  
+    command: node index.js 

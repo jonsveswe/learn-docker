@@ -14,6 +14,16 @@ COPY package.json .
 # Install dependencies in the WORKDIR.
 RUN npm install 
 
+# Argument passed in when building the image. In our case we need to pass it in the docker compose file where we build the image. 
+ARG NODE_ENV
+
+# NOTE: you need the starting and ending spaces in the bracket. 
+# "npm install --only=production;" means no dev dependencies will be installed. 
+RUN if [ "$NODE_ENV"="development" ]; \
+    then npm install; \
+    else npm install --only=production; \
+    fi
+
 # Copy everything from current folder to WORKDIR. 
 # "." and "./" is the same thing.
 COPY . ./
@@ -28,4 +38,6 @@ ENV PORT 3000
 EXPOSE $PORT
 
 # When the container is started, the command "node index.js" will run. 
-CMD ["npm", "run", "dev"]
+# Default command to run. Docker compose file will override this. 
+# E.g. in docker-compose.dev.yml "command: npm run dev".
+CMD ["node", "index.js"]
