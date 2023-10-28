@@ -18,10 +18,14 @@ RUN npm install
 # "." and "./" is the same thing.
 COPY . ./
 
+# Create enviroment variables inside the container.
+# PORT will have default value 3000. You can override this default when you deploy the container, in the "docker run" command.   
+ENV PORT 3000
+
 # Define the network ports that this container will listen on at runtime.
 # (This is for documentation purpose. We tell readers what we expect the app to listen to. We could remove this line and it will
 # not affect anything. Need to use the -p flag in the docker run command to open ports.)
-EXPOSE 3000
+EXPOSE $PORT
 
 # When the container is started, the command "node index.js" will run. 
 CMD ["npm", "run", "dev"]
