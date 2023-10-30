@@ -8,9 +8,9 @@ services:
       args:
         - NODE_ENV=development
     volumes:
-      # Bind mount. Here we can use the dot "." for current directory, no need for ${pwd}.
-      - ./:/app:ro 
-      # anonymous volume to not overwrite the node_modules folder.
+      # Bind mount. Here we can use the dot "." for current directory, no need for ${pwd} that we had to use in docker run command.
+      - ./:/app:ro # hostpath:containerpath
+      # anonymous volume to not overwrite the node_modules folder. Path is in the container. 
       - /app/node_modules 
     environment:
       - NODE_ENV=development
