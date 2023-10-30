@@ -9,6 +9,9 @@ services:
       - "3000:3000"
     environment:
       - Port=3000
+    # Note that this will not check e.g. that the actual db inside the mongo container is up and running before node-app is started. 
+    depends_on:
+      - mongo
   mongo:
     image: mongo
     environment:
