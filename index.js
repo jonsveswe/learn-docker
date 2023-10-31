@@ -1,6 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const {MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT} = require("./config/config.js");
+const {MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT, REDIS_URL, REDIS_PORT, SESSION_SECRET} = require("./config/config.js");
+
+const session = require("express-session");
+const redis = require("redis");
+const RedisStore = require("connect-redis").default;
+let redisClient = redis.createClient({
+    socket: {
+        host: REDIS_URL,
+        port: REDIS_PORT,
+    }  
+});
+redisClient.connect().then(()=>console.log(`succesfullyy connected to redis`)).catch(console.error);
+
 const postRouter = require("./routes/postRoutes");
 const userRouter = require("./routes/userRoutes");
 
@@ -11,12 +23,24 @@ const app = express();
 const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`;
 mongoose
     .connect(mongoURL)
-    .then(()=>console.log(`User ${MONGO_USER} succesfullyy connected to DB`))
+    .then(()=>console.log(`User ${MONGO_USER} succesfullyy connected to Mongo DB`))
     .catch(((error)=>{
         console.log("User: ", MONGO_USER);
         console.log(error);
     }));
 
+ app.use(session({
+    store: new RedisStore({client:redisClient}),
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true, // if false it doesn't work for me. 
+    cookie:{
+        secure: false,
+        httpOnly: true,
+        maxAge: 30000, // ms
+    }
+})); 
+    
 // Middleware to make sure the body gets attached to the request object. 
 app.use(express.json());
 

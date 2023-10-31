@@ -20,6 +20,8 @@ services:
     volumes:
       # a named volume with name "mongo-db". 
       - mongo-db:/data/db # nameofvolume:pathincontainer
+  redis:
+    image: redis
 
 # A named volume can be used by multiple services. That is why we need to add this.
 volumes:
