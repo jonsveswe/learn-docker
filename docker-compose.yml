@@ -1,12 +1,22 @@
 version: '3'
 # A service is a container. 
 services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "3000:80"
+    volumes: 
+      # Sync with a bind mount volume.
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
   node-app:
     # Build the image from our Dockerfile
     build: . # "." is the path to our Dockerfile. 
     # All the configurations from the docker run command. Port to open, bind mount volume, anonymous volume, env file,  
-    ports:
-      - "3000:3000"
+   
+    # When we use nginx we don't need to map ports for node-app container. 
+    #ports:
+      #- "3000:3000"
+    
     environment:
       - Port=3000
     # Note that this will not check e.g. that the actual db inside the mongo container is up and running before node-app is started. 

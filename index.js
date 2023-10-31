@@ -29,7 +29,9 @@ mongoose
         console.log(error);
     }));
 
- app.use(session({
+app.enable("trust proxy");// nginx adds stuff into the header.
+
+app.use(session({
     store: new RedisStore({client:redisClient}),
     secret: SESSION_SECRET,
     resave: false,
@@ -44,8 +46,9 @@ mongoose
 // Middleware to make sure the body gets attached to the request object. 
 app.use(express.json());
 
-app.get("/", (req, res)=>{
+app.get("/api/v1", (req, res)=>{
     res.send("<h2>Hi There!!</h2>");
+    console.log("Yeah it ran.");// log something to see that nginx is load balancing requests. 
 });
 
 //localhost:3000/api/v1/post/
