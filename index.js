@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const {MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT, REDIS_URL, REDIS_PORT, SESSION_SECRET} = require("./config/config.js");
 
+const cors = require("cors");
+
 const session = require("express-session");
 const redis = require("redis");
 const RedisStore = require("connect-redis").default;
@@ -30,6 +32,7 @@ mongoose
     }));
 
 app.enable("trust proxy");// nginx adds stuff into the header.
+app.use(cors({}));
 
 app.use(session({
     store: new RedisStore({client:redisClient}),
