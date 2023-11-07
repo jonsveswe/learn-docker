@@ -12,7 +12,9 @@ services:
         - NODE_ENV=production
     environment:
       # ${MONGO_USER} means that the MONGO_USER env var will be pulled from our Ubuntu server. 
-      # Without quotation marks env var needs to be in an .env file in the same folder as this compose file in the Ubuntu server. 
+      # Without quotation marks env var needs to be in an .env file in the same folder as this compose file in the Ubuntu server.
+      # NOTE: BOTH WITH AND WITHOUT DOES THE SAME FOR ME. I MUST HAVE .env FILE WITH COMPOSE FILE. CAN'T GET READING FROM
+      # HOST ENV VAR TO WORK.   
       - NODE_ENV=production
       - MONGO_USER="${MONGO_USER}"  
       - MONGO_PASSWORD="${MONGO_PASSWORD}"
