@@ -12,5 +12,13 @@ services:
         - NODE_ENV=production
     environment:
       - NODE_ENV=production
+      - MONGO_USER=${MONGO_USER} # ${MONGO_USER} means that the MONGO_USER env var will be pulled from our Ubuntu server.  
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - SESSION_SECRET=${SESSION_SECRET} 
     # This is more optimised than "npm run start".  
     command: node index.js 
+
+  mongo:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
