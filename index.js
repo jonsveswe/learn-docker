@@ -1,6 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const {MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT, REDIS_URL, REDIS_PORT, SESSION_SECRET} = require("./config/config.js");
+console.log(MONGO_USER);
+console.log(MONGO_PASSWORD);
+console.log(MONGO_IP);
+console.log(MONGO_PORT);
+console.log(REDIS_URL);
+console.log(REDIS_PORT);
+console.log(SESSION_SECRET);
 
 const cors = require("cors");
 
