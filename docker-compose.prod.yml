@@ -4,6 +4,15 @@ services:
     ports:
       - "80:80"
   node-app:
+    # deploy is for Docker Swarm.   
+    deploy:
+      replicas: 8
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 2
+        delay: 15s
+
     build:
       # location of the Dockerfile
       context: . 
