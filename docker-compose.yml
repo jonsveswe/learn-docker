@@ -6,7 +6,7 @@ services:
     ports:
       - "3000:80"
     volumes: 
-      # Sync with a bind mount volume.
+      # Sync with a bind mount volume. The path "/etc/nginx/conf.d/default.conf" is where nginx stores its config file in its container.
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
   node-app:
     # Build the image from our Dockerfile when we do "docker compose up". "." is the path to our Dockerfile. 
